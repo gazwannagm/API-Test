@@ -14,12 +14,50 @@ interface Merchant{
   id:string
 }
 
+interface PaymentInitialization {
+
+  messageid:string;
+  amount :number;
+  currencycode : string;
+  paymentmethod: string;
+  order_id :string;
+  cart :[{
+    name:string;
+    qty:number;
+    uniteprice:number;
+    total:number
+  }]
+
+
+
+}
+
+interface paymentTransaction{
+
+  transactionid : string;
+  transactiondate:Date;
+  messageid:string;
+  amount :number;
+  currencycode : string;
+  paymentmethod: string;
+  order_id :string;
+  cart :[{
+    name:string;
+    qty:number;
+    uniteprice:number;
+    total:number
+  }]
+
+
+}
+
 interface Secrets{
   merchant_id: string;
   merchant_secret: string;
 }
 
 const db : Transaction[] = [];
+
 
 const secrets_db : Secrets[] = [
   {
@@ -96,5 +134,64 @@ app.post("/Test", (request: Request, response: Response) => {
   const id = request.body.id
   response.send(secrets.find(s => s.id === id));
 })
+
+const initiate : PaymentInitialization[] = [];
+
+app.post("/Bas_init_payment",(request: Request<{},{}, PaymentInitialization>, response: Response)=>{
+
+  const initTransaction  = request.body
+  initiate.push(initTransaction);
+  response.send();
+})
+
+
+const transaction : paymentTransaction[]=[]
+
+const transactions: paymentTransaction[] = []; 
+
+app.post("/Bas_Create_Transaction", (request: Request, response: Response) => {
+  const initiate = request.body; 
+
+
+  initiate.forEach((initTransaction: any) => {
+
+    const newTransaction: paymentTransaction = {
+      ...initTransaction,
+
+      transactionid: Math.random().toString(36).substring(2, 10), 
+
+      transactiondate: new Date(),
+
+      transactionstate:"pending"
+    };
+    transactions.push(newTransaction); 
+  });
+
+  response.send(transactions); 
+});
+
+
+app.post("/Bas_Validation",(request: Request, response: Response)=>{
+
+    const transaction_id = request.body.transactionid
+
+     response.send(transactions.find(ele=>ele.transactionid === transaction_id))
+
+
+
+
+})
+
+
+
+
+
+
+app.get("/Bas_check_initiation", (request: Request, response: Response) => {
+  response.send()
+});
+
+
+
 
 app.listen(port);
