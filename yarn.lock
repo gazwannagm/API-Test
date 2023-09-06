@@ -854,11 +854,6 @@ type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typescipt@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/typescipt/-/typescipt-1.0.0.tgz#bbe7ca742d5e6fc2e3e44ad10d461fe59211f6a5"
-  integrity sha512-Rgg7DtWh0c0oJPz2p48B0hlINIkE5zxU5i+dGctkoiKjIu6twl0HXWzoy+mvp9bQfLJGx70zYuN6GK0S/x5Kxw==
-
 typescript@^5.2.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
